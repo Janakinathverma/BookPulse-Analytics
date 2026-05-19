@@ -1,14 +1,8 @@
-# Web Scraping Engine
-beautifulsoup4==4.12.3
-requests==2.31.0
-lxml==5.2.1
-
-# Data Processing & Analysis
-pandas==2.2.2
-numpy==1.26.4
-
-# Database (SQLite standard library mein hota hai, par backup ke liye safe rehna achha hai)
-# Visualizations & Dashboard UI
-streamlit==1.35.0
-seaborn==0.13.2
-matplotlib==3.8.4
+beautifulsoup4
+requests
+lxml
+pandas
+numpy
+streamlit
+seaborn
+matplotlib
