@@ -1,0 +1,28 @@
+# Virtual Environment
+myenv/
+venv/
+.venv/
+env/
+
+# Python Cache & Compiled Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# IDE / Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project Specific (Database & Local Data)
+# Hum chahte hain ki database local hi rahe, GitHub par na jaye
+*.db
+*.sqlite3
+data_history.db
+
+# OS specific files
+.DS_Store
+Thumbs.db
