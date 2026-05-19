@@ -29,6 +29,6 @@ def log_to_database(df):
         return
     print(f"[ETL] Logging search results to SQLite database ({DB_NAME})...")
     conn = sqlite3.connect(DB_NAME)
-    # Append mode taaki purani history bachi rahe
+    # Append mode to preserve historical data entries
     df.to_sql("price_history", conn, if_exists="append", index=False)
     conn.close()

@@ -8,7 +8,7 @@ def launch_local_server():
     print("====================================================")
     current_script = __file__
     try:
-        print("🚀 Starting Streamlit Server... Browser window open ho rahi hai.")
+        print("🚀 Starting Streamlit Server... Opening browser window.")
         subprocess.run([sys.executable, "-m", "streamlit", "run", current_script], check=True)
     except KeyboardInterrupt:
         print("\n👋 BookPulse Analytics Server stopped by user. See you again!")
@@ -23,13 +23,13 @@ def launch_local_server():
 import streamlit as st
 
 if not st.runtime.exists():
-    # Agar bina 'streamlit run' ke chal raha hai, toh pehle server launch karo aur script roko
+    # If running without 'streamlit run', initialize server first and halt current script
     launch_local_server()
 else:
-    # Agar Streamlit server ke andar chal raha hai, tabhi baaki code execute hoga
+    # If running inside the Streamlit server runtime, execute core app components
     import pandas as pd
 
-    # System paths configure karna
+    # Configure internal system environment paths
     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
     try:
@@ -61,21 +61,21 @@ else:
     # 4. Trigger Pipeline on Button Click
     if search_button:
         if not book_input.strip():
-            st.sidebar.error("Bhai, pehle kisi book ka naam toh daalo!")
+            st.sidebar.error("Please enter a book title first!")
         else:
-            with st.spinner(f"🚨 '{book_input}' ko platforms par scan kiya jaa raha hai... Please wait!"):
+            with st.spinner(f"🚨 Scanning multi-platform endpoints for '{book_input}'... Please wait!"):
                 try:
                     # Step A: Extract
                     raw_data = fetch_all_prices(book_input)
                     
                     if not raw_data:
-                        st.error("Kisi bhi platform se data fetch nahi ho paya. Ek baar network check karo.")
+                        st.error("Failed to fetch data from target platforms. Please check your network connection.")
                     else:
                         # Step B: Transform
                         cleaned_df = clean_data(raw_data)
                         
                         if cleaned_df.empty:
-                            st.warning("Data extract toh hua par cleaning ke baad khali mila!")
+                            st.warning("Data extracted successfully but found empty after transformation cleaning!")
                         else:
                             # Step C: Load
                             log_to_database(cleaned_df)
@@ -93,12 +93,12 @@ else:
         st.title("📚 BookPulse Analytics")
         st.markdown("### Real-Time Multi-Platform E-Book Price Aggregator & Analytics Pipeline")
         st.markdown("---")
-        st.info("👈 Left sidebar mein book ka naam daal kar **Search & Analyze** par click karo live prices aur dashboard dekhne ke liye!")
+        st.info("👈 Enter a book title in the left sidebar and click **Search & Analyze** to view real-time prices and analytics dashboards!")
         
         st.markdown("""
         #### ⚙️ Pipeline Features Loaded:
-        * **Web Scraping Engine:** Live multi-source HTML parser via BeautifulSoup.
-        * **ETL Pipeline:** Structured cleaning, token handling, and discount normalization via Pandas.
-        * **SQL Logging Database:** Native search and optimization tracking with SQLite.
-        * **Analytical Insights:** Interactive presentation layer powered by Seaborn and Matplotlib.
+        * **Web Scraping Engine:** Live multi-source HTML parser powered by BeautifulSoup.
+        * **ETL Pipeline:** Structured cleaning, token handling, and discount normalization using Pandas.
+        * **SQL Logging Database:** Native search and optimization tracking architecture with SQLite.
+        * **Analytical Insights:** Interactive presentation layer driven by Seaborn and Matplotlib.
         """)
